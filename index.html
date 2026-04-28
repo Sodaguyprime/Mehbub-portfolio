@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PROTOFILO. — Abdulrahman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  <Link rel="stylesheet" href="./styles/styles.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">PROTOFILO<span>.</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-left">
+      <div class="hero-dot-grid" id="heroDots"></div>
+      <p class="hero-sub reveal">My name is</p>
+      <h1 class="hero-name reveal reveal-delay-1">
+        <span>My name is</span>
+        Mehbub
+      </h1>
+      <div class="hero-badge reveal reveal-delay-2">I'm a UI Developer</div>
+      <div class="hero-scroll reveal reveal-delay-3">
+        <span class="hero-scroll-line"></span>
+        Scroll Down
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&auto=format&fit=crop" alt="Abdulrahman portrait" />
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-img-wrap reveal">
+        <div class="about-img-frame">
+          <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=600&q=80&auto=format&fit=crop" alt="About photo" />
+          <div class="about-accent-circle"></div>
+        </div>
+        <div class="about-dot-grid" id="aboutDots"></div>
+      </div>
+      <div class="about-content">
+        <p class="about-label reveal">Who am I</p>
+        <h2 class="about-heading reveal reveal-delay-1">HELLO<span class="dot">.</span></h2>
+        <svg class="about-wave reveal reveal-delay-1" viewBox="0 0 80 14" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 7 Q10 0 20 7 Q30 14 40 7 Q50 0 60 7 Q70 14 80 7"/>
+        </svg>
+        <p class="about-text reveal reveal-delay-2">I am a UI developer. It is a long time fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution.</p>
+        <p class="about-text reveal reveal-delay-3">It is a fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem ipsum is that it has a more-or-less normal distribution.</p>
+        <div class="about-stats">
+          <div class="stat-item reveal reveal-delay-1">
+            <div class="stat-num">48<span>+</span></div>
+            <div class="stat-label">Projects Done</div>
+          </div>
+          <div class="stat-item reveal reveal-delay-2">
+            <div class="stat-num">32<span>+</span></div>
+            <div class="stat-label">Happy Clients</div>
+          </div>
+          <div class="stat-item reveal reveal-delay-3">
+            <div class="stat-num">6<span>+</span></div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works">
+    <div class="section-heading-wrap reveal">
+      <h2 class="section-heading">MY WORK <span class="icon"></span></h2>
+      <p class="section-sub">awesome projects</p>
+    </div>
+
+    <ul class="filter-tabs reveal reveal-delay-1" id="filterTabs">
+      <li class="active" data-filter="all">All</li>
+      <li data-filter="graphic">Graphic</li>
+      <li data-filter="videos">Videos</li>
+      <li data-filter="webdesign">Webdesign</li>
+      <li data-filter="branding">Branding</li>
+    </ul>
+
+    <div class="portfolio-grid" id="portfolioGrid">
+      <!-- items injected by JS -->
+    </div>
+
+    <div class="load-more-wrap reveal">
+      <button class="btn-load" id="loadMore">Load More</button>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="skills-inner">
+      <div class="section-heading-wrap reveal">
+        <h2 class="section-heading" style="color:var(--white)">MY SKILLS <span class="icon"></span></h2>
+        <p class="section-sub">what I master</p>
+      </div>
+      <div class="skills-grid" id="skillsGrid"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-heading-wrap reveal">
+        <h2 class="section-heading">CONTACT <span class="icon"></span></h2>
+        <p class="section-sub">get in touch</p>
+      </div>
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-group reveal reveal-delay-1"><input type="text" placeholder="Your Name" /></div>
+          <div class="form-group reveal reveal-delay-2"><input type="email" placeholder="Your Email" /></div>
+        </div>
+        <div class="form-group reveal reveal-delay-1"><input type="text" placeholder="Subject" /></div>
+        <div class="form-group reveal reveal-delay-2"><textarea placeholder="Your Message"></textarea></div>
+        <button class="btn-send reveal reveal-delay-3">Send Message</button>
+      </form>
+    </div>
+  </section>
+  <footer>
+    <p>© 2026 <span>PROTOFILO.</span> — Designed & Built by Ammar</p>
+  </footer>
+  <script src="./scripts/main.js"></script>
+</body>
+</html>
