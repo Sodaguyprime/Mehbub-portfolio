@@ -5,8 +5,8 @@
         el.appendChild(s);
       }
     }
-    makeDots(document.getElementById('heroDots'), 80);
-    makeDots(document.getElementById('aboutDots'), 35);
+    makeDots(document.getElementById('heroDots'), 180);
+    makeDots(document.getElementById('aboutDots'), 36);
 
     /* ── HAMBURGER ── */
     const hamburger = document.getElementById('hamburger');

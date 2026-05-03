@@ -35,9 +35,10 @@
 
     .nav-logo {
       font-family: var(--font-display);
-      font-size: 1.5rem;
+      font-size: 2rem;
       letter-spacing: 2px;
       color: var(--white);
+      margin-left: 40px;
     }
     .nav-logo span { color: var(--yellow); }
 
@@ -242,9 +243,9 @@
     }
     .about-dot-grid {
       position: absolute;
-      bottom: -30px; right: -30px;
+      bottom: -40px; right: -40px;
       display: grid;
-      grid-template-columns: repeat(7, 10px);
+      grid-template-columns: repeat(12, 10px);
       gap: 7px;
       opacity: 0.3;
     }
@@ -255,7 +256,7 @@
       border-radius: 50%;
     }
 
-    .about-content {}
+    .about-content { margin-top: -40px; }
     .about-label {
       font-size: 0.72rem;
       font-weight: 600;
