@@ -19,6 +19,7 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <a href="#contact" class="nav-cta">Hire Me</a>
     <div class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </div>
@@ -28,6 +29,14 @@
   <section id="home">
     <div class="hero-left">
       <div class="hero-dot-grid" id="heroDots"></div>
+      <div class="hero-galleries reveal" aria-label="Samples of work">
+        <div class="hero-gallery">
+          <div class="hero-gallery-track reverse" id="heroGalleryTop"></div>
+        </div>
+        <div class="hero-gallery">
+          <div class="hero-gallery-track" id="heroGalleryBottom"></div>
+        </div>
+      </div>
       <div class="hero-tagline reveal">"Turning Ideas into Print-Ready Designs"</div>
       <p class="hero-sub reveal reveal-delay-1">My name is</p>
       <h1 class="hero-name reveal reveal-delay-1">Mehbub</h1>
@@ -38,20 +47,42 @@
       </div>
     </div>
     <div class="hero-right">
-      <img src="./images/profile picture.jpeg" alt="Mehbub portrait" />
+      <img id="heroImg" src="./images/profile picture.jpeg" alt="Mehbub portrait" />
     </div>
   </section>
 
   <!-- ABOUT -->
   <section id="about">
     <div class="about-inner">
-      <div class="about-img-wrap reveal">
-        <div class="about-img-frame">
-          <img src="./images/profile picture.jpeg" alt="Mehbub portrait" />
-          <div class="about-accent-circle"></div>
+      <div class="about-media">
+        <div class="about-img-wrap reveal">
+          <div class="about-img-frame">
+            <img id="aboutImg" src="./images/profile picture.jpeg" alt="Mehbub portrait" />
+            <div class="about-accent-circle"></div>
+          </div>
+          <div class="about-dot-grid" id="aboutDots"></div>
         </div>
-        <div class="about-dot-grid" id="aboutDots"></div>
+
+        <!-- Stats — sit just under the picture -->
+        <div class="about-stats">
+          <div class="stat-feature reveal">
+            <div class="stat-feature-num">400<span>+</span></div>
+            <div class="stat-feature-label">Projects<br/>Done</div>
+            <div class="stat-feature-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+          </div>
+          <div class="stat-card reveal reveal-delay-1">
+            <div class="stat-card-num">100<span>+</span></div>
+            <div class="stat-card-label">Happy<br/>Clients</div>
+          </div>
+          <div class="stat-card reveal reveal-delay-2">
+            <div class="stat-card-num">8<span>+</span></div>
+            <div class="stat-card-label">Years<br/>Experience</div>
+          </div>
+        </div>
       </div>
+
       <div class="about-content">
         <p class="about-label reveal">Who am I</p>
         <h2 class="about-heading reveal reveal-delay-1">HELLO<span class="dot">.</span></h2>
@@ -60,20 +91,6 @@
         </svg>
         <p class="about-text reveal reveal-delay-2">I am a Graphic Designer and Back Office Executive with over 8 years of experience in print media, signage, prepress production, and social media design. I specialize in creating clean, practical, and print-ready designs with a strong focus on delivering high-quality visual solutions.</p>
         <p class="about-text reveal reveal-delay-3">I am open to job opportunities, freelance work, and collaborations. Whether it's a branding project, signage, or social media design — I bring precision, creativity, and a deep understanding of print production to every project.</p>
-        <div class="about-stats">
-          <div class="stat-item reveal reveal-delay-1">
-            <div class="stat-num">400<span>+</span></div>
-            <div class="stat-label">Projects Done</div>
-          </div>
-          <div class="stat-item reveal reveal-delay-2">
-            <div class="stat-num">100<span>+</span></div>
-            <div class="stat-label">Happy Clients</div>
-          </div>
-          <div class="stat-item reveal reveal-delay-3">
-            <div class="stat-num">8<span>+</span></div>
-            <div class="stat-label">Years Experience</div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -98,12 +115,43 @@
       <li data-filter="stickers">Stickers</li>
     </ul>
 
-    <div class="portfolio-masonry" id="portfolioGrid">
-      <!-- items injected by JS -->
-    </div>
+    <div class="showcase reveal reveal-delay-1">
+      <div class="showcase-stack">
+        <!-- card peeking behind (previews the next work) -->
+        <div class="showcase-card-back"><img id="showcaseImgBack" alt="" /></div>
 
-    <div class="load-more-wrap reveal">
-      <button class="btn-load" id="loadMore">Load More</button>
+        <!-- front card -->
+        <div class="showcase-card">
+          <img id="showcaseImg" alt="Selected work" />
+          <img id="showcaseImgSlide" alt="" aria-hidden="true" />
+
+          <div class="showcase-top">
+            <div class="showcase-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              <span id="showcaseTitle">Loading…</span>
+            </div>
+            <button class="showcase-expand" id="showcaseExpand" aria-label="View fullscreen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+            </button>
+          </div>
+
+          <div class="showcase-bottom">
+            <div class="showcase-progress"><div class="showcase-progress-fill" id="showcaseProgress"></div></div>
+            <div class="showcase-controls">
+              <button class="sc-btn sc-side" id="scPrev" aria-label="Previous work">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+              </button>
+              <button class="sc-btn sc-play" id="scPlay" aria-label="Play slideshow">
+                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+              </button>
+              <button class="sc-btn sc-side" id="scNext" aria-label="Next work">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-counter" id="scCount"></div>
     </div>
   </section>
 
@@ -126,35 +174,50 @@
         <p class="section-sub">get in touch</p>
       </div>
 
-      <!-- Contact Info Cards -->
-      <div class="contact-info-row">
-        <div class="contact-info-card reveal reveal-delay-1">
-          <div class="contact-info-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          </div>
-          <div class="contact-info-label">Phone</div>
-          <div class="contact-info-value">
-            <a href="tel:+96894428639">+968 94428639</a><br/>
-            <a href="tel:+919401202165">+91 9401202165</a>
-          </div>
+      <div class="contact-layout">
+        <!-- CTA panel -->
+        <div class="contact-cta reveal">
+          <span class="contact-availability"><span class="pulse-dot"></span>Available for work</span>
+          <h3 class="contact-cta-title">Let's create something<br/><span>print-ready.</span></h3>
+          <p class="contact-cta-text">Have a branding project, signage, or social media design in mind? I'd love to hear about it — let's bring it to life with precision and craft.</p>
+          <a href="mailto:mh_e_solutions@hotmail.com" class="contact-cta-btn">
+            Start a conversation
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </div>
-        <div class="contact-info-card reveal reveal-delay-2">
-          <div class="contact-info-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div class="contact-info-label">Email</div>
-          <div class="contact-info-value">
-            <a href="mailto:mh_e_solutions@hotmail.com">mh_e_solutions@hotmail.com</a>
-          </div>
-        </div>
-        <div class="contact-info-card reveal reveal-delay-3">
-          <div class="contact-info-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </div>
-          <div class="contact-info-label">Instagram</div>
-          <div class="contact-info-value">
-            <a href="https://instagram.com/mh_e_solutions" target="_blank">@mh_e_solutions</a>
-          </div>
+
+        <!-- Info cards -->
+        <div class="contact-info-row">
+          <a href="tel:+96894428639" class="contact-info-card reveal reveal-delay-1">
+            <div class="contact-info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Phone</div>
+              <div class="contact-info-value">+968 94428639 · +91 9401202165</div>
+            </div>
+            <span class="contact-info-arrow">↗</span>
+          </a>
+          <a href="mailto:mh_e_solutions@hotmail.com" class="contact-info-card reveal reveal-delay-2">
+            <div class="contact-info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Email</div>
+              <div class="contact-info-value">mh_e_solutions@hotmail.com</div>
+            </div>
+            <span class="contact-info-arrow">↗</span>
+          </a>
+          <a href="https://instagram.com/mh_e_solutions" target="_blank" rel="noopener" class="contact-info-card reveal reveal-delay-3">
+            <div class="contact-info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Instagram</div>
+              <div class="contact-info-value">@mh_e_solutions</div>
+            </div>
+            <span class="contact-info-arrow">↗</span>
+          </a>
         </div>
       </div>
 
@@ -165,6 +228,10 @@
     <p>© 2026 <span>PROTOFILO.</span> — Designed &amp; Built by Mehbub</p>
   </footer>
 
+  <!-- canvas overlay for the hero → about dust morph -->
+  <canvas id="morphCanvas" aria-hidden="true"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="./scripts/main.js"></script>
   <!-- Lightbox markup -->
   <div id="pf-lightbox" class="pf-lightbox" onclick="closeLightbox()">
