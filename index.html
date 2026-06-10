@@ -3,12 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PROTOFILO. — Mehbub</title>
+  <title>PROTOFILO. — Mehbub · Graphic Designer</title>
+  <meta name="description" content="Mehbub — Graphic Designer & Back Office Executive. 8+ years crafting print-ready designs, signage, prepress and brand systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500;0,9..144,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles/styles.css" />
 </head>
 <body>
+  <!-- film grain + scroll progress + custom cursor -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
   <!-- NAV -->
   <nav>
     <div class="nav-logo">PROTOFILO<span>.</span></div>
@@ -19,7 +27,7 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Hire Me</a>
+    <a href="#contact" class="nav-cta magnetic">Hire Me</a>
     <div class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </div>
@@ -27,36 +35,92 @@
 
   <!-- HERO -->
   <section id="home">
-    <div class="hero-left">
-      <div class="hero-dot-grid" id="heroDots"></div>
-      <div class="hero-galleries reveal" aria-label="Samples of work">
-        <div class="hero-gallery">
-          <div class="hero-gallery-track reverse" id="heroGalleryTop"></div>
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-spotlight" id="heroSpotlight"></div>
+      <div class="hero-grid-lines"></div>
+      <div class="hero-ghost" data-ghost>DESIGN</div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow reveal">
+          <span class="hero-eyebrow-dot"></span>
+          Graphic Designer · Est. 2017
         </div>
-        <div class="hero-gallery">
-          <div class="hero-gallery-track" id="heroGalleryBottom"></div>
+
+        <h1 class="hero-name reveal reveal-delay-1" aria-label="Mehbub">
+          <span class="hero-name-line"><span>M</span><span>E</span><span>H</span><span>B</span><span>U</span><span>B</span></span>
+        </h1>
+
+        <p class="hero-role reveal reveal-delay-2">
+          Graphic Designer <em>&amp;</em> Back Office Executive
+        </p>
+
+        <p class="hero-lede reveal reveal-delay-3">
+          Turning ideas into <em>print-ready</em> designs — signage, prepress,
+          and brand systems crafted with precision &amp; an editor's eye.
+        </p>
+
+        <div class="hero-actions reveal reveal-delay-3">
+          <a href="#works" class="btn btn-primary magnetic">
+            View Work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost magnetic">Hire Me</a>
+        </div>
+
+        <div class="hero-meta reveal reveal-delay-4">
+          <div class="hero-meta-item"><b data-count="8" data-suffix="+">0</b><span>Years</span></div>
+          <div class="hero-meta-sep"></div>
+          <div class="hero-meta-item"><b data-count="400" data-suffix="+">0</b><span>Projects</span></div>
+          <div class="hero-meta-sep"></div>
+          <div class="hero-meta-item"><b data-count="100" data-suffix="+">0</b><span>Clients</span></div>
         </div>
       </div>
-      <div class="hero-tagline reveal">"Turning Ideas into Print-Ready Designs"</div>
-      <p class="hero-sub reveal reveal-delay-1">My name is</p>
-      <h1 class="hero-name reveal reveal-delay-1">Mehbub</h1>
-      <div class="hero-badge reveal reveal-delay-2">Graphic Designer &amp; Back Office Executive</div>
-      <div class="hero-scroll reveal reveal-delay-3">
-        <span class="hero-scroll-line"></span>
-        Scroll Down
+
+      <div class="hero-right reveal reveal-delay-2">
+        <div class="hero-portrait" data-tilt>
+          <div class="hero-portrait-frame">
+            <img id="heroImg" src="./images/profile picture.jpeg" alt="Mehbub portrait" />
+            <div class="hero-portrait-grain"></div>
+          </div>
+          <span class="hero-portrait-tag">MEHBUB ©</span>
+          <span class="hero-portrait-badge" aria-hidden="true">
+            <svg viewBox="0 0 100 100"><defs><path id="circlePath" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs><text><textPath href="#circlePath">PRINT · SIGNAGE · BRANDING · PREPRESS · </textPath></text></svg>
+            <span class="hero-portrait-badge-core">↗</span>
+          </span>
+        </div>
       </div>
     </div>
-    <div class="hero-right">
-      <img id="heroImg" src="./images/profile picture.jpeg" alt="Mehbub portrait" />
+
+    <div class="hero-scroll reveal reveal-delay-4">
+      <span class="hero-scroll-line"></span>
+      Scroll
     </div>
   </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Print Media</span><span class="marquee-star">✦</span>
+      <span>Signage</span><span class="marquee-star">✦</span>
+      <span>Prepress</span><span class="marquee-star">✦</span>
+      <span>Brand Systems</span><span class="marquee-star">✦</span>
+      <span>Social Media</span><span class="marquee-star">✦</span>
+      <span>Print Media</span><span class="marquee-star">✦</span>
+      <span>Signage</span><span class="marquee-star">✦</span>
+      <span>Prepress</span><span class="marquee-star">✦</span>
+      <span>Brand Systems</span><span class="marquee-star">✦</span>
+      <span>Social Media</span><span class="marquee-star">✦</span>
+    </div>
+  </div>
 
   <!-- ABOUT -->
   <section id="about">
     <div class="about-inner">
       <div class="about-media">
         <div class="about-img-wrap reveal">
-          <div class="about-img-frame">
+          <div class="about-img-frame" data-tilt>
             <img id="aboutImg" src="./images/profile picture.jpeg" alt="Mehbub portrait" />
             <div class="about-accent-circle"></div>
           </div>
@@ -66,18 +130,18 @@
         <!-- Stats — sit just under the picture -->
         <div class="about-stats">
           <div class="stat-feature reveal">
-            <div class="stat-feature-num">400<span>+</span></div>
+            <div class="stat-feature-num" data-count="400" data-suffix="+">0<span>+</span></div>
             <div class="stat-feature-label">Projects<br/>Done</div>
             <div class="stat-feature-badge" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
             </div>
           </div>
           <div class="stat-card reveal reveal-delay-1">
-            <div class="stat-card-num">100<span>+</span></div>
+            <div class="stat-card-num" data-count="100" data-suffix="+">0<span>+</span></div>
             <div class="stat-card-label">Happy<br/>Clients</div>
           </div>
           <div class="stat-card reveal reveal-delay-2">
-            <div class="stat-card-num">8<span>+</span></div>
+            <div class="stat-card-num" data-count="8" data-suffix="+">0<span>+</span></div>
             <div class="stat-card-label">Years<br/>Experience</div>
           </div>
         </div>
@@ -91,6 +155,14 @@
         </svg>
         <p class="about-text reveal reveal-delay-2">I am a Graphic Designer and Back Office Executive with over 8 years of experience in print media, signage, prepress production, and social media design. I specialize in creating clean, practical, and print-ready designs with a strong focus on delivering high-quality visual solutions.</p>
         <p class="about-text reveal reveal-delay-3">I am open to job opportunities, freelance work, and collaborations. Whether it's a branding project, signage, or social media design — I bring precision, creativity, and a deep understanding of print production to every project.</p>
+
+        <div class="about-tags reveal reveal-delay-3">
+          <span>Adobe Illustrator</span>
+          <span>Photoshop</span>
+          <span>CorelDRAW</span>
+          <span>Prepress</span>
+          <span>Signage</span>
+        </div>
       </div>
     </div>
   </section>
@@ -99,7 +171,7 @@
   <section id="works">
     <div class="section-heading-wrap reveal">
       <h2 class="section-heading">MY WORK <span class="icon"></span></h2>
-      <p class="section-sub">awesome projects</p>
+      <p class="section-sub">selected projects</p>
     </div>
 
     <ul class="filter-tabs reveal reveal-delay-1" id="filterTabs">
@@ -116,15 +188,15 @@
     </ul>
 
     <div class="showcase reveal reveal-delay-1">
-      <div class="showcase-stack">
-        <!-- card peeking behind (previews the next work) -->
-        <div class="showcase-card-back"><img id="showcaseImgBack" alt="" /></div>
+      <div class="showcase-stack" id="showcaseStack">
+        <!-- a small deck of fanned cards; JS assigns roles and shuffles them -->
+        <div class="showcase-card"><img alt="" aria-hidden="true" /></div>
+        <div class="showcase-card"><img alt="" aria-hidden="true" /></div>
+        <div class="showcase-card"><img alt="" aria-hidden="true" /></div>
+        <div class="showcase-card"><img alt="Selected work" /></div>
 
-        <!-- front card -->
-        <div class="showcase-card">
-          <img id="showcaseImg" alt="Selected work" />
-          <img id="showcaseImgSlide" alt="" aria-hidden="true" />
-
+        <!-- chrome pinned over the front card position -->
+        <div class="showcase-chrome">
           <div class="showcase-top">
             <div class="showcase-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
@@ -180,7 +252,7 @@
           <span class="contact-availability"><span class="pulse-dot"></span>Available for work</span>
           <h3 class="contact-cta-title">Let's create something<br/><span>print-ready.</span></h3>
           <p class="contact-cta-text">Have a branding project, signage, or social media design in mind? I'd love to hear about it — let's bring it to life with precision and craft.</p>
-          <a href="mailto:mh_e_solutions@hotmail.com" class="contact-cta-btn">
+          <a href="mailto:mh_e_solutions@hotmail.com" class="contact-cta-btn magnetic">
             Start a conversation
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>

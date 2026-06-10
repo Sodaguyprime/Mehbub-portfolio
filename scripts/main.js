@@ -4,45 +4,134 @@
 
 /* ── DOT GRIDS ── */
 function makeDots(el, count) {
+  if (!el) return;
   for (let i = 0; i < count; i++) {
     const s = document.createElement('span');
     el.appendChild(s);
   }
 }
-makeDots(document.getElementById('heroDots'), 180);
 makeDots(document.getElementById('aboutDots'), 36);
 
-/* ── HERO PHONE GALLERY (auto-scrolling work samples) ── */
-const HERO_SAMPLES = [
-  './images/Educational designs/3.jpg',
-  './images/Perfumes accesories/25723.jpg',
-  './images/Restaurants/02102022.jpg',
-  './images/Advertisments/ad post.jpg',
-  './images/CD desgins/25102022.jpg',
-  './images/Others/Adhkar.jpg',
-  './images/Educational designs/4.jpg',
-  './images/Discount designs/06012024.jpg',
-  './images/stickers/08062023.jpg',
-  './images/Acrylic trophy designs/Acrylic TROPHY.jpg'
-];
-function fillGalleryTrack(track, samples) {
-  if (!track) return;
-  /* duplicate the set so the marquee can loop seamlessly (-50%) */
-  [...samples, ...samples].forEach(src => {
-    const phone = document.createElement('div');
-    phone.className = 'hero-phone';
-    const img = document.createElement('img');
-    img.src = src;
-    img.alt = 'Work sample';
-    img.loading = 'lazy';
-    phone.appendChild(img);
-    track.appendChild(phone);
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── CUSTOM CURSOR (dot + trailing ring, magnetic-aware) ── */
+function setupCursor() {
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+  /* skip on touch / coarse pointers */
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  document.body.classList.add('has-cursor');
+
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  let rx = mx, ry = my;
+
+  window.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = `translate(${mx}px, ${my}px)`;
+  }, { passive: true });
+
+  (function trail() {
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    requestAnimationFrame(trail);
+  })();
+
+  /* grow over interactive elements */
+  const hot = 'a, button, .magnetic, [data-tilt], #filterTabs li, .skill-item, .stat-card, .stat-feature, .contact-info-card';
+  document.querySelectorAll(hot).forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hot'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hot'));
   });
 }
-/* top row uses a rotated order so the two rows don't mirror each other */
-const HERO_SAMPLES_TOP = HERO_SAMPLES.slice(5).concat(HERO_SAMPLES.slice(0, 5));
-fillGalleryTrack(document.getElementById('heroGalleryTop'), HERO_SAMPLES_TOP);
-fillGalleryTrack(document.getElementById('heroGalleryBottom'), HERO_SAMPLES);
+
+/* ── MAGNETIC BUTTONS ── */
+function setupMagnetic() {
+  if (prefersReduced || !window.matchMedia('(pointer: fine)').matches) return;
+  document.querySelectorAll('.magnetic').forEach(el => {
+    const strength = 0.35;
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width / 2);
+      const y = e.clientY - (r.top + r.height / 2);
+      el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
+}
+
+/* ── HERO SPOTLIGHT (cursor-tracked glow) + GHOST PARALLAX ── */
+function setupHeroSpotlight() {
+  const hero  = document.getElementById('home');
+  const spot  = document.getElementById('heroSpotlight');
+  const ghost = document.querySelector('[data-ghost]');
+  if (!hero || !spot) return;
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width)  * 100;
+    const y = ((e.clientY - r.top)  / r.height) * 100;
+    spot.style.setProperty('--mx', x + '%');
+    spot.style.setProperty('--my', y + '%');
+    if (ghost && !prefersReduced) {
+      const dx = (x - 50) * 0.4, dy = (y - 50) * 0.4;
+      ghost.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+    }
+  }, { passive: true });
+}
+
+/* ── LIGHTWEIGHT TILT (portraits / frames) ── */
+function setupTilt() {
+  if (prefersReduced || !window.matchMedia('(pointer: fine)').matches) return;
+  document.querySelectorAll('[data-tilt]').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width  - 0.5;
+      const py = (e.clientY - r.top)  / r.height - 0.5;
+      el.style.transform = `perspective(900px) rotateX(${-py * 6}deg) rotateY(${px * 8}deg)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'perspective(900px) rotateX(0) rotateY(0)';
+    });
+  });
+}
+
+/* ── ANIMATED COUNTERS ── */
+function animateCount(el) {
+  const target = parseFloat(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const render = n => { el.innerHTML = n + (suffix ? `<span>${suffix}</span>` : ''); };
+  if (prefersReduced) { render(target); return; }
+  const dur = 1500;
+  const start = performance.now();
+  (function tick(now) {
+    const t = Math.min((now - start) / dur, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    render(Math.round(target * eased));
+    if (t < 1) requestAnimationFrame(tick);
+  })(start);
+}
+function setupCounters() {
+  const els = document.querySelectorAll('[data-count]');
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { animateCount(e.target); o.unobserve(e.target); }
+    });
+  }, { threshold: 0.6 });
+  els.forEach(el => obs.observe(el));
+}
+
+/* ── SCROLL PROGRESS BAR ── */
+function setupScrollProgress() {
+  const bar = document.getElementById('scrollProgress');
+  if (!bar) return;
+  const update = () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = `scaleX(${h > 0 ? window.scrollY / h : 0})`;
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
 
 /* ── HAMBURGER ── */
 const hamburger = document.getElementById('hamburger');
@@ -167,14 +256,29 @@ let scIndex   = 0;
 let scPlaying = false;
 let scTimer   = null;
 
-const scImg      = document.getElementById('showcaseImg');
-const scSlide    = document.getElementById('showcaseImgSlide');
-const scImgBack  = document.getElementById('showcaseImgBack');
+const scStack    = document.getElementById('showcaseStack');
+const scCards    = Array.from(scStack.querySelectorAll('.showcase-card'));
 const scTitle    = document.getElementById('showcaseTitle');
 const scProgress = document.getElementById('showcaseProgress');
 const scCount    = document.getElementById('scCount');
 const scPlayBtn  = document.getElementById('scPlay');
-let   scAnim     = null;            // active slide tween
+let   scAnim     = null;            // active shuffle timeline
+const scReduced  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* the deck: four cards that cycle through these roles.
+   next/back fan out to the LEFT (back = deeper, more tilt = upcoming works),
+   prev peeks to the RIGHT (the work we just left). */
+const SC_SLOTS = {
+  front: { x:   0, y:  0, rotate:   0, scale: 1.00, z: 40 },
+  next:  { x: -26, y:  6, rotate:  -8, scale: 0.94, z: 30 },
+  back:  { x: -46, y: 18, rotate: -15, scale: 0.87, z: 20 },
+  prev:  { x:  30, y: 11, rotate:   9, scale: 0.91, z: 10 },
+};
+/* content offset (relative to the current index) shown by each role */
+const SC_OFFSET = { front: 0, next: 1, back: 2, prev: -1 };
+
+/* role → element map, rotated on every step */
+let scRoles = { front: scCards[0], next: scCards[1], back: scCards[2], prev: scCards[3] };
 
 const PLAY_SVG  = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>';
 const PAUSE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
@@ -185,20 +289,6 @@ function filteredItems() {
   return currentFilter === 'all'
     ? ALL_ITEMS
     : ALL_ITEMS.filter(it => it.category === currentFilter);
-}
-
-/* preload, then crossfade the front image */
-function fadeTo(src, alt) {
-  scImg.style.opacity = '0';
-  const pre = new Image();
-  const swap = () => {
-    scImg.src = src;
-    scImg.alt = alt;
-    requestAnimationFrame(() => { scImg.style.opacity = '1'; });
-  };
-  pre.onload = swap;
-  pre.onerror = swap;
-  pre.src = src;
 }
 
 function setProgress(pct, durationMs) {
@@ -215,54 +305,110 @@ function runSlideProgress() {
   setProgress(100, SC_DURATION);
 }
 
-/* commit the slid-in image as the new base layer */
-function commitBase(item) {
-  scImg.src = item.src;
-  scImg.alt = item.label;
-  scImg.style.opacity = '1';
-  scSlide.style.display = 'none';
-  scAnim = null;
+/* the work each role should be displaying for the current index */
+function scItemFor(role) {
+  const n = scItems.length;
+  return scItems[((scIndex + SC_OFFSET[role]) % n + n) % n];
+}
+function setCardImg(card, item) {
+  const img = card.firstElementChild;
+  img.src = item.src;
+  img.alt = item.label;
 }
 
-function scShow(i, dir = 0) {
-  if (!scItems.length) return;
-  scIndex = (i + scItems.length) % scItems.length;
+/* update the pinned chrome (title / counter / progress) for the current item */
+function updateChrome() {
   const item = scItems[scIndex];
-  const next = scItems[(scIndex + 1) % scItems.length];
-
+  if (!item) return;
   scTitle.textContent = item.label;
   scCount.textContent = `${pad(scIndex + 1)} / ${pad(scItems.length)}`;
   if (scPlaying) runSlideProgress();
   else setProgress(((scIndex + 1) / scItems.length) * 100, 0);
+}
 
-  scImgBack.src = next.src;
-
-  if (dir && window.gsap) {
-    /* next image slides over the current one from the pressed side */
-    if (scAnim) scAnim.progress(1);            // finish any in-flight slide
-    const startX = dir > 0 ? 105 : -105;       // right press → enter from right
-    const pre = new Image();
-    pre.onload = pre.onerror = () => {
-      scSlide.src = item.src;
-      scSlide.alt = item.label;
-      scSlide.style.display = 'block';
-      gsap.killTweensOf(scSlide);
-      scAnim = gsap.fromTo(scSlide,
-        { xPercent: startX },
-        { xPercent: 0, duration: 0.6, ease: 'power3.out', onComplete: () => commitBase(item) });
-    };
-    pre.src = item.src;
+/* place a card in its slot — instantly, no animation */
+function placeCard(card, role) {
+  card.dataset.role = role;
+  const s = SC_SLOTS[role];
+  if (window.gsap) {
+    gsap.set(card, { x: s.x, y: s.y, rotation: s.rotate, scale: s.scale, zIndex: s.z, opacity: 1 });
   } else {
-    fadeTo(item.src, item.label);             // first load / no GSAP → crossfade
+    card.style.transform = `translate(${s.x}px,${s.y}px) rotate(${s.rotate}deg) scale(${s.scale})`;
+    card.style.zIndex = s.z;
+    card.style.opacity = '1';
   }
 }
 
-function scStep(dir) {
-  scShow(scIndex + dir, dir);
-  if (scPlaying) {
-    clearTimeout(scTimer);
-    scTimer = setTimeout(() => scStep(1), SC_DURATION);
+/* render the whole deck for the current index without animating (first load / filter change) */
+function renderDeck() {
+  if (!scItems.length) return;
+  for (const role in scRoles) {
+    const card = scRoles[role];
+    setCardImg(card, scItemFor(role));
+    placeCard(card, role);
   }
+  updateChrome();
+}
+
+/* shuffle the deck one step. dir > 0 = next (front peels to the back-right,
+   the card behind comes forward); dir < 0 = previous. */
+function scStep(dir) {
+  if (!scItems.length) { scheduleAutoplay(); return; }
+
+  if (!window.gsap || scReduced) {
+    scIndex = (scIndex + dir + scItems.length) % scItems.length;
+    renderDeck();
+    scheduleAutoplay();
+    return;
+  }
+
+  if (scAnim && scAnim.isActive()) scAnim.progress(1);   // finish any in-flight shuffle
+
+  const r = scRoles;
+  const forward = dir > 0;
+  /* new role → element mapping, and which card wraps around behind the deck */
+  const next = forward
+    ? { front: r.next, next: r.back, back: r.prev,  prev: r.front }   // next→front … front→prev
+    : { front: r.prev, next: r.front, back: r.next, prev: r.back };   // prev→front … back→prev
+  const wrapCard = forward ? r.prev : r.back;   // the deepest card, recycled to the far side
+  const wrapRole = forward ? 'back' : 'prev';
+
+  scIndex = (scIndex + dir + scItems.length) % scItems.length;
+
+  /* preload the recycled card's new artwork so it's ready when we swap it mid-fade */
+  const wrapItem = scItemFor(wrapRole);
+  new Image().src = wrapItem.src;
+
+  scAnim = gsap.timeline({
+    defaults: { ease: 'power3.inOut' },
+    onComplete: () => { scAnim = null; },
+  });
+  for (const role in next) {
+    const card = next[role];
+    const s = SC_SLOTS[role];
+    card.dataset.role = role;                    // drives the brightness/cursor swap via CSS
+    if (card === wrapCard) {
+      /* recycled card crosses far behind the deck — fade it out, jump, swap art, fade back in */
+      scAnim.to(card, { opacity: 0, duration: 0.22, ease: 'power1.in' }, 0)
+            .add(() => {
+              gsap.set(card, { x: s.x, y: s.y, rotation: s.rotate, scale: s.scale, zIndex: s.z });
+              setCardImg(card, wrapItem);
+            })
+            .to(card, { opacity: 1, duration: 0.34, ease: 'power1.out' });
+    } else {
+      gsap.set(card, { zIndex: s.z });           // re-layer instantly so the swap reads correctly
+      scAnim.to(card, { x: s.x, y: s.y, rotation: s.rotate, scale: s.scale, duration: 0.62 }, 0);
+    }
+  }
+
+  scRoles = next;
+  updateChrome();
+  scheduleAutoplay();
+}
+
+function scheduleAutoplay() {
+  clearTimeout(scTimer);
+  if (scPlaying) scTimer = setTimeout(() => scStep(1), SC_DURATION);
 }
 
 function scSetPlaying(play) {
@@ -282,11 +428,10 @@ function scSetPlaying(play) {
 function scSetFilter(filter) {
   currentFilter = filter;
   scItems = filteredItems();
-  scShow(0);
-  if (scPlaying) {
-    clearTimeout(scTimer);
-    scTimer = setTimeout(() => scStep(1), SC_DURATION);
-  }
+  scIndex = 0;
+  if (scAnim && scAnim.isActive()) scAnim.progress(1);
+  renderDeck();
+  scheduleAutoplay();
 }
 
 /* ── FILTER TABS ── */
@@ -302,9 +447,17 @@ document.getElementById('filterTabs').addEventListener('click', e => {
 document.getElementById('scPrev').addEventListener('click', () => scStep(-1));
 document.getElementById('scNext').addEventListener('click', () => scStep(1));
 scPlayBtn.addEventListener('click', () => scSetPlaying(!scPlaying));
-scImg.addEventListener('click', () => openLightbox(scItems[scIndex].src, scItems[scIndex].label));
 document.getElementById('showcaseExpand').addEventListener('click', () =>
   openLightbox(scItems[scIndex].src, scItems[scIndex].label));
+
+/* clicking a card: front opens the lightbox, the side cards navigate the deck */
+scStack.addEventListener('click', e => {
+  const card = e.target.closest('.showcase-card');
+  if (!card) return;
+  if (card === scRoles.front) openLightbox(scItems[scIndex].src, scItems[scIndex].label);
+  else if (card === scRoles.prev) scStep(-1);
+  else scStep(1);
+});
 
 /* keyboard arrows navigate when the showcase is in view */
 document.addEventListener('keydown', e => {
@@ -515,6 +668,12 @@ document.addEventListener('DOMContentLoaded', () => {
   scSetFilter('all');
   setupReveal();
   setupMorph();
+  setupCursor();
+  setupMagnetic();
+  setupHeroSpotlight();
+  setupTilt();
+  setupCounters();
+  setupScrollProgress();
   /* immediately reveal hero elements */
   document.querySelectorAll('#home .reveal').forEach(el => el.classList.add('visible'));
 });
