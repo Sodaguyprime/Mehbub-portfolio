@@ -168,65 +168,24 @@
   </section>
 
   <!-- WORKS -->
-  <section id="works">
-    <div class="section-heading-wrap reveal">
-      <h2 class="section-heading">MY WORK <span class="icon"></span></h2>
-      <p class="section-sub">selected projects</p>
+  <div class="portfolio-slider reveal reveal-delay-1">
+
+  <button class="slider-arrow prev" id="portfolioPrev">
+    ❮
+  </button>
+
+  <div class="slider-track-wrapper">
+
+    <div class="slider-track" id="portfolioTrack">
     </div>
 
-    <ul class="filter-tabs reveal reveal-delay-1" id="filterTabs">
-      <li class="active" data-filter="all">All</li>
-      <li data-filter="acrylic">Acrylic Trophy</li>
-      <li data-filter="advertisements">Advertisements</li>
-      <li data-filter="cd">CD Designs</li>
-      <li data-filter="discount">Discount</li>
-      <li data-filter="educational">Educational</li>
-      <li data-filter="others">Others</li>
-      <li data-filter="perfumes">Perfumes</li>
-      <li data-filter="restaurants">Restaurants</li>
-      <li data-filter="stickers">Stickers</li>
-    </ul>
+  </div>
 
-    <div class="showcase reveal reveal-delay-1">
-      <div class="showcase-stack" id="showcaseStack">
-        <!-- a small deck of fanned cards; JS assigns roles and shuffles them -->
-        <div class="showcase-card"><img alt="" aria-hidden="true" /></div>
-        <div class="showcase-card"><img alt="" aria-hidden="true" /></div>
-        <div class="showcase-card"><img alt="" aria-hidden="true" /></div>
-        <div class="showcase-card"><img alt="Selected work" /></div>
+  <button class="slider-arrow next" id="portfolioNext">
+    ❯
+  </button>
 
-        <!-- chrome pinned over the front card position -->
-        <div class="showcase-chrome">
-          <div class="showcase-top">
-            <div class="showcase-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-              <span id="showcaseTitle">Loading…</span>
-            </div>
-            <button class="showcase-expand" id="showcaseExpand" aria-label="View fullscreen">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-            </button>
-          </div>
-
-          <div class="showcase-bottom">
-            <div class="showcase-progress"><div class="showcase-progress-fill" id="showcaseProgress"></div></div>
-            <div class="showcase-controls">
-              <button class="sc-btn sc-side" id="scPrev" aria-label="Previous work">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
-              </button>
-              <button class="sc-btn sc-play" id="scPlay" aria-label="Play slideshow">
-                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-              </button>
-              <button class="sc-btn sc-side" id="scNext" aria-label="Next work">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="showcase-counter" id="scCount"></div>
-    </div>
-  </section>
-
+</div>
   <!-- SKILLS -->
   <section id="skills">
     <div class="skills-inner">
