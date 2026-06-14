@@ -121,6 +121,8 @@ function setupCounters() {
   els.forEach(el => obs.observe(el));
 }
 
+
+
 /* ── SCROLL PROGRESS BAR ── */
 function setupScrollProgress() {
   const bar = document.getElementById('scrollProgress');
@@ -248,237 +250,129 @@ CATEGORIES.forEach(cat => {
   });
 });
 
-/* ── WORKS SHOWCASE (stacked-card carousel) ── */
-const SC_DURATION = 3800;           // ms per slide while playing
-let currentFilter = 'all';
-let scItems   = [];
-let scIndex   = 0;
-let scPlaying = false;
-let scTimer   = null;
+/* ── PORTFOLIO SLIDER ───────────────────────────── */
 
-const scStack    = document.getElementById('showcaseStack');
-const scCards    = Array.from(scStack.querySelectorAll('.showcase-card'));
-const scTitle    = document.getElementById('showcaseTitle');
-const scProgress = document.getElementById('showcaseProgress');
-const scCount    = document.getElementById('scCount');
-const scPlayBtn  = document.getElementById('scPlay');
-let   scAnim     = null;            // active shuffle timeline
-const scReduced  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const track = document.getElementById("portfolioTrack");
+const prevBtn = document.getElementById("portfolioPrev");
+const nextBtn = document.getElementById("portfolioNext");
 
-/* the deck: four cards that cycle through these roles.
-   next/back fan out to the LEFT (back = deeper, more tilt = upcoming works),
-   prev peeks to the RIGHT (the work we just left). */
-const SC_SLOTS = {
-  front: { x:   0, y:  0, rotate:   0, scale: 1.00, z: 40 },
-  next:  { x: -26, y:  6, rotate:  -8, scale: 0.94, z: 30 },
-  back:  { x: -46, y: 18, rotate: -15, scale: 0.87, z: 20 },
-  prev:  { x:  30, y: 11, rotate:   9, scale: 0.91, z: 10 },
-};
-/* content offset (relative to the current index) shown by each role */
-const SC_OFFSET = { front: 0, next: 1, back: 2, prev: -1 };
+if (track && prevBtn && nextBtn) {
 
-/* role → element map, rotated on every step */
-let scRoles = { front: scCards[0], next: scCards[1], back: scCards[2], prev: scCards[3] };
+    let currentIndex = 0;
+    let autoPlay;
 
-const PLAY_SVG  = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>';
-const PAUSE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+    function buildSlider(filter = "all") {
 
-const pad = n => String(n).padStart(2, '0');
+        track.innerHTML = "";
 
-function filteredItems() {
-  return currentFilter === 'all'
-    ? ALL_ITEMS
-    : ALL_ITEMS.filter(it => it.category === currentFilter);
-}
+        const items =
+            filter === "all"
+                ? ALL_ITEMS
+                : ALL_ITEMS.filter(item => item.category === filter);
 
-function setProgress(pct, durationMs) {
-  scProgress.style.transition = durationMs
-    ? `width ${durationMs}ms linear`
-    : 'width 0.4s ease';
-  scProgress.style.width = pct + '%';
-}
+        items.forEach(item => {
 
-/* animate the bar 0 → 100% over one slide duration */
-function runSlideProgress() {
-  setProgress(0, 0);
-  void scProgress.offsetWidth;      // force reflow so the reset applies
-  setProgress(100, SC_DURATION);
-}
+            const card = document.createElement("div");
+            card.className = "portfolio-card";
 
-/* the work each role should be displaying for the current index */
-function scItemFor(role) {
-  const n = scItems.length;
-  return scItems[((scIndex + SC_OFFSET[role]) % n + n) % n];
-}
-function setCardImg(card, item) {
-  const img = card.firstElementChild;
-  img.src = item.src;
-  img.alt = item.label;
-}
+            card.innerHTML = `
+                <img src="${item.src}" alt="${item.label}">
+                <div class="portfolio-overlay">
+                    <h3>${item.label}</h3>
+                </div>
+            `;
 
-/* update the pinned chrome (title / counter / progress) for the current item */
-function updateChrome() {
-  const item = scItems[scIndex];
-  if (!item) return;
-  scTitle.textContent = item.label;
-  scCount.textContent = `${pad(scIndex + 1)} / ${pad(scItems.length)}`;
-  if (scPlaying) runSlideProgress();
-  else setProgress(((scIndex + 1) / scItems.length) * 100, 0);
-}
+            track.appendChild(card);
+        });
 
-/* place a card in its slot — instantly, no animation */
-function placeCard(card, role) {
-  card.dataset.role = role;
-  const s = SC_SLOTS[role];
-  if (window.gsap) {
-    gsap.set(card, { x: s.x, y: s.y, rotation: s.rotate, scale: s.scale, zIndex: s.z, opacity: 1 });
-  } else {
-    card.style.transform = `translate(${s.x}px,${s.y}px) rotate(${s.rotate}deg) scale(${s.scale})`;
-    card.style.zIndex = s.z;
-    card.style.opacity = '1';
-  }
-}
-
-/* render the whole deck for the current index without animating (first load / filter change) */
-function renderDeck() {
-  if (!scItems.length) return;
-  for (const role in scRoles) {
-    const card = scRoles[role];
-    setCardImg(card, scItemFor(role));
-    placeCard(card, role);
-  }
-  updateChrome();
-}
-
-/* shuffle the deck one step. dir > 0 = next (front peels to the back-right,
-   the card behind comes forward); dir < 0 = previous. */
-function scStep(dir) {
-  if (!scItems.length) { scheduleAutoplay(); return; }
-
-  if (!window.gsap || scReduced) {
-    scIndex = (scIndex + dir + scItems.length) % scItems.length;
-    renderDeck();
-    scheduleAutoplay();
-    return;
-  }
-
-  if (scAnim && scAnim.isActive()) scAnim.progress(1);   // finish any in-flight shuffle
-
-  const r = scRoles;
-  const forward = dir > 0;
-  /* new role → element mapping, and which card wraps around behind the deck */
-  const next = forward
-    ? { front: r.next, next: r.back, back: r.prev,  prev: r.front }   // next→front … front→prev
-    : { front: r.prev, next: r.front, back: r.next, prev: r.back };   // prev→front … back→prev
-  const wrapCard = forward ? r.prev : r.back;   // the deepest card, recycled to the far side
-  const wrapRole = forward ? 'back' : 'prev';
-
-  scIndex = (scIndex + dir + scItems.length) % scItems.length;
-
-  /* preload the recycled card's new artwork so it's ready when we swap it mid-fade */
-  const wrapItem = scItemFor(wrapRole);
-  new Image().src = wrapItem.src;
-
-  scAnim = gsap.timeline({
-    defaults: { ease: 'power3.inOut' },
-    onComplete: () => { scAnim = null; },
-  });
-  for (const role in next) {
-    const card = next[role];
-    const s = SC_SLOTS[role];
-    card.dataset.role = role;                    // drives the brightness/cursor swap via CSS
-    if (card === wrapCard) {
-      /* recycled card crosses far behind the deck — fade it out, jump, swap art, fade back in */
-      scAnim.to(card, { opacity: 0, duration: 0.22, ease: 'power1.in' }, 0)
-            .add(() => {
-              gsap.set(card, { x: s.x, y: s.y, rotation: s.rotate, scale: s.scale, zIndex: s.z });
-              setCardImg(card, wrapItem);
-            })
-            .to(card, { opacity: 1, duration: 0.34, ease: 'power1.out' });
-    } else {
-      gsap.set(card, { zIndex: s.z });           // re-layer instantly so the swap reads correctly
-      scAnim.to(card, { x: s.x, y: s.y, rotation: s.rotate, scale: s.scale, duration: 0.62 }, 0);
+        currentIndex = 0;
+        updateSlider();
     }
-  }
 
-  scRoles = next;
-  updateChrome();
-  scheduleAutoplay();
+    function cards() {
+        return document.querySelectorAll(".portfolio-card");
+    }
+
+    function getCardWidth() {
+        const first = cards()[0];
+        return first ? first.offsetWidth + 20 : 0;
+    }
+
+    function visibleCards() {
+        return window.innerWidth < 768 ? 1 : 4;
+    }
+
+    function maxIndex() {
+        return Math.max(0, cards().length - visibleCards());
+    }
+
+    function updateSlider() {
+        track.style.transform =
+            `translateX(-${currentIndex * getCardWidth()}px)`;
+    }
+
+    function nextSlide() {
+
+        if (currentIndex >= maxIndex()) {
+            currentIndex = 0;
+        } else {
+            currentIndex++;
+        }
+
+        updateSlider();
+    }
+
+    function prevSlide() {
+
+        if (currentIndex <= 0) {
+            currentIndex = maxIndex();
+        } else {
+            currentIndex--;
+        }
+
+        updateSlider();
+    }
+
+    nextBtn.addEventListener("click", nextSlide);
+    prevBtn.addEventListener("click", prevSlide);
+
+    function startAutoPlay() {
+
+        clearInterval(autoPlay);
+
+        autoPlay = setInterval(() => {
+            nextSlide();
+        }, 4000);
+    }
+
+    track.addEventListener("mouseenter", () => {
+        clearInterval(autoPlay);
+    });
+
+    track.addEventListener("mouseleave", startAutoPlay);
+
+    window.addEventListener("resize", updateSlider);
+
+    /* FILTER TABS */
+    document
+        .getElementById("filterTabs")
+        ?.addEventListener("click", (e) => {
+
+            const tab = e.target.closest("li");
+            if (!tab) return;
+
+            document
+                .querySelectorAll("#filterTabs li")
+                .forEach(li => li.classList.remove("active"));
+
+            tab.classList.add("active");
+
+            buildSlider(tab.dataset.filter);
+        });
+
+    buildSlider("all");
+    startAutoPlay();
 }
-
-function scheduleAutoplay() {
-  clearTimeout(scTimer);
-  if (scPlaying) scTimer = setTimeout(() => scStep(1), SC_DURATION);
-}
-
-function scSetPlaying(play) {
-  scPlaying = play;
-  scPlayBtn.classList.toggle('playing', play);
-  scPlayBtn.innerHTML = play ? PAUSE_SVG : PLAY_SVG;
-  scPlayBtn.setAttribute('aria-label', play ? 'Pause slideshow' : 'Play slideshow');
-  clearTimeout(scTimer);
-  if (play) {
-    runSlideProgress();
-    scTimer = setTimeout(() => scStep(1), SC_DURATION);
-  } else {
-    setProgress(((scIndex + 1) / scItems.length) * 100, 0);
-  }
-}
-
-function scSetFilter(filter) {
-  currentFilter = filter;
-  scItems = filteredItems();
-  scIndex = 0;
-  if (scAnim && scAnim.isActive()) scAnim.progress(1);
-  renderDeck();
-  scheduleAutoplay();
-}
-
-/* ── FILTER TABS ── */
-document.getElementById('filterTabs').addEventListener('click', e => {
-  const li = e.target.closest('li');
-  if (!li) return;
-  document.querySelectorAll('#filterTabs li').forEach(el => el.classList.remove('active'));
-  li.classList.add('active');
-  scSetFilter(li.dataset.filter);
-});
-
-/* ── SHOWCASE CONTROLS ── */
-document.getElementById('scPrev').addEventListener('click', () => scStep(-1));
-document.getElementById('scNext').addEventListener('click', () => scStep(1));
-scPlayBtn.addEventListener('click', () => scSetPlaying(!scPlaying));
-document.getElementById('showcaseExpand').addEventListener('click', () =>
-  openLightbox(scItems[scIndex].src, scItems[scIndex].label));
-
-/* clicking a card: front opens the lightbox, the side cards navigate the deck */
-scStack.addEventListener('click', e => {
-  const card = e.target.closest('.showcase-card');
-  if (!card) return;
-  if (card === scRoles.front) openLightbox(scItems[scIndex].src, scItems[scIndex].label);
-  else if (card === scRoles.prev) scStep(-1);
-  else scStep(1);
-});
-
-/* keyboard arrows navigate when the showcase is in view */
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowLeft')  scStep(-1);
-  if (e.key === 'ArrowRight') scStep(1);
-});
-
-/* ── LIGHTBOX ── */
-function openLightbox(src, label) {
-  const lb = document.getElementById('pf-lightbox');
-  lb.querySelector('img').src = src;
-  lb.querySelector('.lb-caption').textContent = label;
-  lb.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  document.getElementById('pf-lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-/* expose closeLightbox globally (called via onclick in HTML) */
-window.closeLightbox = closeLightbox;
 
 /* ── SKILLS ── */
 const skills = [
@@ -663,9 +557,10 @@ function setupMorph() {
   requestAnimationFrame(loop);
 }
 
+
+
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
-  scSetFilter('all');
   setupReveal();
   setupMorph();
   setupCursor();
