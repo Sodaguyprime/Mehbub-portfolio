@@ -1,2 +1,6 @@
 .claude
 graphify-out
+node_modules
+package.json
+package-lock.json
+images-backup
