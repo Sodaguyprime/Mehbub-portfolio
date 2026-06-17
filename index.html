@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PROTOFILO. — Mehbub · Graphic Designer</title>
+  <meta name="description" content="Mehbub — Graphic Designer & Back Office Executive. 8+ years crafting print-ready designs, signage, prepress and brand systems." />
+  <meta name="theme-color" content="#111111" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <meta property="og:title" content="PROTOFILO. — Mehbub · Graphic Designer" />
+  <meta property="og:description" content="8+ years crafting print-ready designs, signage, prepress and brand systems." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./images/profile picture.jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500;0,9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/styles.css" />
+</head>
+<body>
+  <!-- film grain + scroll progress + custom cursor -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">PROTOFILO<span>.</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta magnetic">Hire Me</a>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-spotlight" id="heroSpotlight"></div>
+      <div class="hero-grid-lines"></div>
+      <div class="hero-ghost" data-ghost>DESIGN</div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow reveal">
+          <span class="hero-eyebrow-dot"></span>
+          Graphic Designer · Est. 2017
+        </div>
+
+        <h1 class="hero-name reveal reveal-delay-1" aria-label="Mehbub">
+          <span class="hero-name-line"><span>M</span><span>E</span><span>H</span><span>B</span><span>U</span><span>B</span></span>
+        </h1>
+
+        <p class="hero-role reveal reveal-delay-2">
+          Graphic Designer <em>&amp;</em> Back Office Executive
+        </p>
+
+        <p class="hero-lede reveal reveal-delay-3">
+          Turning ideas into <em>print-ready</em> designs — signage, prepress,
+          and brand systems crafted with precision &amp; an editor's eye.
+        </p>
+
+        <div class="hero-actions reveal reveal-delay-3">
+          <a href="#works" class="btn btn-primary magnetic">
+            View Work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost magnetic">Hire Me</a>
+        </div>
+
+        <div class="hero-meta reveal reveal-delay-4">
+          <div class="hero-meta-item"><b data-count="8" data-suffix="+">0</b><span>Years</span></div>
+          <div class="hero-meta-sep"></div>
+          <div class="hero-meta-item"><b data-count="400" data-suffix="+">0</b><span>Projects</span></div>
+          <div class="hero-meta-sep"></div>
+          <div class="hero-meta-item"><b data-count="100" data-suffix="+">0</b><span>Clients</span></div>
+        </div>
+      </div>
+
+      <div class="hero-right reveal reveal-delay-2">
+        <div class="hero-portrait" data-tilt>
+          <div class="hero-portrait-frame">
+            <img id="heroImg" src="./images/profile picture.jpeg" alt="Mehbub portrait" fetchpriority="high" decoding="async" width="520" height="640" />
+            <div class="hero-portrait-grain"></div>
+          </div>
+          <span class="hero-portrait-tag">MEHBUB ©</span>
+          <span class="hero-portrait-badge" aria-hidden="true">
+            <svg viewBox="0 0 100 100"><defs><path id="circlePath" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs><text><textPath href="#circlePath">PRINT · SIGNAGE · BRANDING · PREPRESS · </textPath></text></svg>
+            <span class="hero-portrait-badge-core">↗</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll reveal reveal-delay-4">
+      <span class="hero-scroll-line"></span>
+      Scroll
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Print Media</span><span class="marquee-star">✦</span>
+      <span>Signage</span><span class="marquee-star">✦</span>
+      <span>Prepress</span><span class="marquee-star">✦</span>
+      <span>Brand Systems</span><span class="marquee-star">✦</span>
+      <span>Social Media</span><span class="marquee-star">✦</span>
+      <span>Print Media</span><span class="marquee-star">✦</span>
+      <span>Signage</span><span class="marquee-star">✦</span>
+      <span>Prepress</span><span class="marquee-star">✦</span>
+      <span>Brand Systems</span><span class="marquee-star">✦</span>
+      <span>Social Media</span><span class="marquee-star">✦</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-media">
+        <div class="about-img-wrap reveal">
+          <div class="about-img-frame" data-tilt>
+            <img id="aboutImg" src="./images/profile picture.jpeg" alt="Mehbub portrait" loading="lazy" decoding="async" />
+            <div class="about-accent-circle"></div>
+          </div>
+          <div class="about-dot-grid" id="aboutDots"></div>
+        </div>
+
+        <!-- Stats — sit just under the picture -->
+        <div class="about-stats">
+          <div class="stat-feature reveal">
+            <div class="stat-feature-num" data-count="400" data-suffix="+">0<span>+</span></div>
+            <div class="stat-feature-label">Projects<br/>Done</div>
+            <div class="stat-feature-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+          </div>
+          <div class="stat-card reveal reveal-delay-1">
+            <div class="stat-card-num" data-count="100" data-suffix="+">0<span>+</span></div>
+            <div class="stat-card-label">Happy<br/>Clients</div>
+          </div>
+          <div class="stat-card reveal reveal-delay-2">
+            <div class="stat-card-num" data-count="8" data-suffix="+">0<span>+</span></div>
+            <div class="stat-card-label">Years<br/>Experience</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <p class="about-label reveal">Who am I</p>
+        <h2 class="about-heading reveal reveal-delay-1">HELLO<span class="dot">.</span></h2>
+        <svg class="about-wave reveal reveal-delay-1" viewBox="0 0 80 14" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 7 Q10 0 20 7 Q30 14 40 7 Q50 0 60 7 Q70 14 80 7"/>
+        </svg>
+        <p class="about-text reveal reveal-delay-2">I am a Graphic Designer and Back Office Executive with over 8 years of experience in print media, signage, prepress production, and social media design. I specialize in creating clean, practical, and print-ready designs with a strong focus on delivering high-quality visual solutions.</p>
+        <p class="about-text reveal reveal-delay-3">I am open to job opportunities, freelance work, and collaborations. Whether it's a branding project, signage, or social media design — I bring precision, creativity, and a deep understanding of print production to every project.</p>
+
+        <div class="about-tags reveal reveal-delay-3">
+          <span>Adobe Illustrator</span>
+          <span>Photoshop</span>
+          <span>CorelDRAW</span>
+          <span>Prepress</span>
+          <span>Signage</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works">
+    <div class="section-heading-wrap reveal">
+      <h2 class="section-heading">MY WORK <span class="icon"></span></h2>
+      <p class="section-sub">selected projects</p>
+    </div>
+
+    <div class="portfolio-slider reveal reveal-delay-1">
+      <button class="slider-arrow prev" id="portfolioPrev" aria-label="Previous">❮</button>
+
+      <div class="slider-track-wrapper" id="portfolioViewport">
+        <div class="slider-track" id="portfolioTrack"></div>
+      </div>
+
+      <button class="slider-arrow next" id="portfolioNext" aria-label="Next">❯</button>
+    </div>
+
+    <div class="works-cta reveal reveal-delay-2">
+      <a href="./gallery.html" class="btn btn-primary magnetic">
+        View Full Gallery
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="skills-inner">
+      <div class="section-heading-wrap reveal">
+        <h2 class="section-heading" style="color:var(--white)">MY SKILLS <span class="icon"></span></h2>
+        <p class="section-sub">what I master</p>
+      </div>
+      <div class="skills-grid" id="skillsGrid"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-heading-wrap reveal">
+        <h2 class="section-heading">CONTACT <span class="icon"></span></h2>
+        <p class="section-sub">get in touch</p>
+      </div>
+
+      <div class="contact-layout">
+        <!-- CTA panel -->
+        <div class="contact-cta reveal">
+          <span class="contact-availability"><span class="pulse-dot"></span>Available for work</span>
+          <h3 class="contact-cta-title">Let's create something<br/><span>print-ready.</span></h3>
+          <p class="contact-cta-text">Have a branding project, signage, or social media design in mind? I'd love to hear about it — let's bring it to life with precision and craft.</p>
+          <a href="mailto:mh_e_solutions@hotmail.com" class="contact-cta-btn magnetic">
+            Start a conversation
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <!-- Info cards -->
+        <div class="contact-info-row">
+          <a href="tel:+96894428639" class="contact-info-card reveal reveal-delay-1">
+            <div class="contact-info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Phone</div>
+              <div class="contact-info-value">+968 94428639 · +91 9401202165</div>
+            </div>
+            <span class="contact-info-arrow">↗</span>
+          </a>
+          <a href="mailto:mh_e_solutions@hotmail.com" class="contact-info-card reveal reveal-delay-2">
+            <div class="contact-info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Email</div>
+              <div class="contact-info-value">mh_e_solutions@hotmail.com</div>
+            </div>
+            <span class="contact-info-arrow">↗</span>
+          </a>
+          <a href="https://instagram.com/mh_e_solutions" target="_blank" rel="noopener" class="contact-info-card reveal reveal-delay-3">
+            <div class="contact-info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Instagram</div>
+              <div class="contact-info-value">@mh_e_solutions</div>
+            </div>
+            <span class="contact-info-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 <span>PROTOFILO.</span> — Designed &amp; Built by Mehbub</p>
+  </footer>
+
+  <!-- canvas overlay for the hero → about dust morph -->
+  <canvas id="morphCanvas" aria-hidden="true"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="./scripts/data.js" defer></script>
+  <script src="./scripts/main.js" defer></script>
+  <!-- Lightbox markup -->
+  <div id="pf-lightbox" class="pf-lightbox" onclick="closeLightbox()">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <img src="" alt="" />
+    <div class="lb-caption"></div>
+  </div>
+
+</body>
+</html>

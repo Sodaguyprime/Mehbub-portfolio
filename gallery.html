@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery — Mehbub · Graphic Designer</title>
+  <meta name="description" content="The full design gallery of Mehbub — print, signage, prepress, branding and more." />
+  <meta name="theme-color" content="#111111" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/gallery.css" />
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="g-header">
+    <a href="./index.html" class="g-back" aria-label="Back to portfolio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back
+    </a>
+    <div class="g-logo">PROTOFILO<span>.</span></div>
+    <a href="./index.html#contact" class="g-cta">Hire Me</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="g-hero">
+    <p class="g-eyebrow">The full archive</p>
+    <h1 class="g-title">GALLERY</h1>
+    <p class="g-lede">Every project, one wall. Print media, signage, prepress, branding &amp; more — crafted with precision.</p>
+  </section>
+
+  <!-- FILTERS -->
+  <ul class="g-filters" id="galleryFilters" aria-label="Filter by category"></ul>
+
+  <!-- MASONRY GRID -->
+  <main class="masonry" id="galleryGrid" aria-live="polite"></main>
+
+  <footer class="g-footer">
+    <p>© 2026 <span>PROTOFILO.</span> — Designed &amp; Built by Mehbub</p>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div id="pf-lightbox" class="pf-lightbox" aria-hidden="true">
+    <button class="lb-close" type="button" aria-label="Close">✕</button>
+    <img src="" alt="" />
+    <div class="lb-caption"></div>
+  </div>
+
+  <script src="./scripts/data.js"></script>
+  <script src="./scripts/gallery.js"></script>
+</body>
+</html>
