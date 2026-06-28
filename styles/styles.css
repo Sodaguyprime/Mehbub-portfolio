@@ -774,6 +774,9 @@ nav.nav-hidden { transform: translateY(-130%); }
   line-height: 1.85;
   color: #444;
   margin-bottom: 18px;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 /* skill tags under the bio */
@@ -1553,4 +1556,131 @@ footer span { color: var(--yellow); }
   .grain, .hero-ghost, .marquee-track,
   .hero-scroll-line, .hero-portrait-badge svg { animation: none !important; }
   .reveal { opacity: 1; transform: none; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRINT  (Ctrl+P)  — clean, readable paper layout.
+   Only affects printing; the on-screen design is untouched.
+══════════════════════════════════════════════════════════ */
+@media print {
+  /* sensible page margins */
+  @page { margin: 14mm; }
+
+  /* print the colors/images we DO keep, instead of dropping them */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* normalise the whole document to dark-ink-on-white for legibility */
+  html, body {
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 11pt;
+  }
+
+  /* reveal-on-scroll items never get triggered on paper — force them visible */
+  .reveal,
+  [class*="reveal-delay"] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    visibility: visible !important;
+  }
+
+  /* hide screen-only chrome, decoration & interactive bits */
+  .grain,
+  .scroll-progress,
+  .cursor-dot,
+  .cursor-ring,
+  nav,
+  .hamburger,
+  .nav-cta,
+  .marquee,
+  .hero-bg,
+  .hero-spotlight,
+  .hero-grid-lines,
+  .hero-ghost,
+  .hero-scroll,
+  .hero-actions,
+  .about-dot-grid,
+  .about-accent-circle,
+  .hero-portrait-badge,
+  .hero-portrait-grain,
+  .about-wave,
+  .slider-arrow,
+  .works-cta,
+  #morphCanvas,
+  .pf-lightbox {
+    display: none !important;
+  }
+
+  /* let sections flow naturally — no full-screen heights or dark panels */
+  section {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 18px 0 !important;
+    margin: 0 !important;
+    background: #fff !important;
+    color: #111 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* force every dark/coloured panel & its text back to print-friendly tones */
+  #skills, #contact, #home, footer,
+  .skills-inner, .contact-inner, .contact-cta,
+  .contact-info-card, .stat-card, .stat-feature,
+  .skill-card, .skills-grid > * {
+    background: #fff !important;
+    color: #111 !important;
+    box-shadow: none !important;
+    border-color: #ddd !important;
+  }
+
+  /* any element that was white-on-dark turns dark-on-white */
+  [style*="--white"],
+  .section-heading,
+  .contact-cta-title,
+  .contact-cta-title span,
+  .contact-info-value,
+  .contact-info-label,
+  .stat-card-num, .stat-card-label,
+  .stat-feature-num, .stat-feature-label {
+    color: #111 !important;
+    -webkit-text-fill-color: #111 !important;
+  }
+
+  /* headings & paragraphs shouldn't be split across pages */
+  h1, h2, h3, p, .about-text, .section-heading-wrap {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+
+  /* images: keep them on-page and never overflow the sheet */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* let the about/hero/contact grids stack cleanly on paper */
+  .hero-inner,
+  .about-inner,
+  .contact-layout,
+  .contact-info-row,
+  .skills-grid {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  /* show full URLs for the contact links so a printout is actionable */
+  .contact-info-card { text-decoration: none !important; }
+
+  /* start each major section on a fresh consideration of page breaks */
+  #about, #works, #skills, #contact { page-break-before: auto; }
+
+  footer { border-top: 1px solid #ddd; }
 }
