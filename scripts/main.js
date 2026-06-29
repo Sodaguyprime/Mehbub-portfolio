@@ -461,7 +461,6 @@ function setupMorph() {
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
   setupReveal();
-  setupMorph();
   setupCursor();
   setupMagnetic();
   setupHeroSpotlight();
