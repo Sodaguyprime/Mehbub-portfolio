@@ -1426,6 +1426,43 @@ nav.nav-hidden { transform: translateY(-130%); }
 }
 .contact-info-card:hover .contact-info-arrow { transform: translate(3px, -3px); color: var(--accent); }
 
+/* ── Phone cards: flag + WhatsApp/Call actions ── */
+.contact-info-icon--flag {
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.15);
+  padding: 0;
+  overflow: hidden;
+}
+.contact-info-icon--flag svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  stroke: none;
+}
+.contact-info-card--phone { cursor: default; }
+.contact-info-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.contact-action-btn {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--black);
+  border-radius: 10px;
+  color: var(--black);
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.contact-action-btn svg { width: 18px; height: 18px; }
+.contact-action-whatsapp { color: #25D366; border-color: #25D366; }
+.contact-action-whatsapp:hover { background: #25D366; border-color: #25D366; color: #fff; transform: translateY(-2px); }
+.contact-action-call:hover { background: var(--yellow); border-color: var(--black); color: var(--black); transform: translateY(-2px); }
+
 /* ══════════════════════════════════════════════════════════
    FOOTER
 ══════════════════════════════════════════════════════════ */
