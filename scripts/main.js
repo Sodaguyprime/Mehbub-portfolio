@@ -380,7 +380,7 @@ function setupMorph() {
     }
     ready = true;
   };
-  src.src = './images/profile picture.jpeg';
+  src.src = './images/profile picture.webp';
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 1) * 0.85;  // render below CSS res; dust hides it
